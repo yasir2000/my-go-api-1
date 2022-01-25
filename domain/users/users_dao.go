@@ -1,6 +1,9 @@
 package users
 
-import "github.com/yasir2000/my-go-api-1/utils/errors"
+import (
+	"github.com/yasir2000/my-go-api-1/datasource/mysql/users_db"
+	"github.com/yasir2000/my-go-api-1/utils/errors"
+)
 
 const (
 	queryInsertUser = "INSERT INTO users(first_name, last_name, email"

@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: dplatform_postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dplatform
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  server:
+    image: dplatform:1.0
+    depends_on:
+      - dplatform_postgres
+    ports:
+      - "8080:8080"

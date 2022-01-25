@@ -1,7 +1,9 @@
 package app
 
+import "github.com/gin-gonic/gin"
+
 var (
-	router = gin.Defaulyt()
+	router = gin.Default()
 )
 
 func StartApplication() {
