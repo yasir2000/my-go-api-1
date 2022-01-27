@@ -6,17 +6,18 @@ import (
 )
 
 const (
-	queryInsertUser = "INSERT INTO users(first_name, last_name, email"
+	queryInsertUser = "INSERT INTO users_db_01.users(first_name, last_name, email, password) values(?,?,?,?);"
 )
 
 func (user *User) Save() *errors.RestErr {
 	stmt, err := users_db.Client.Prepare(queryInsertUser)
+
 	if err != nil {
 		return errors.NewInternalServerError("database error")
 	}
 	defer stmt.Close()
 
-	insertResult, saveErr := stmt.Exec(user.FirstName, user.LastName, user.Password)
+	insertResult, saveErr := stmt.Exec(user.FirstName, user.LastName, user.Email, user.Password)
 	if saveErr != nil {
 		return errors.NewInternalServerError("database error")
 	}
