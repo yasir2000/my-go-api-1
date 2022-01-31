@@ -8,11 +8,12 @@ import (
 )
 
 const (
-	queryInsertUser   = "INSERT INTO users_db_01.users(first_name, last_name, email, password) values(?,?,?,?);"
-	queryGetUser      = "SELECT Id, first_name, last_name, email FROM users WHERE id=?;"
-	queryUpdateUser   = "UPDATE users SET first_name=?, last_name=?, email=? WHERE id=?;"
-	queryDeleteUser   = "DELETE FROM users WHERE id=?;"
-	queryFindbyStatus = "SELECT id, first_name, last_name, email, status FROM users WHERE status=?;"
+	queryInsertUser     = "INSERT INTO users_db_01.users(first_name, last_name, email, password) values(?,?,?,?);"
+	queryGetUser        = "SELECT Id, first_name, last_name, email FROM users WHERE id=?;"
+	queryUpdateUser     = "UPDATE users SET first_name=?, last_name=?, email=? WHERE id=?;"
+	queryDeleteUser     = "DELETE FROM users WHERE id=?;"
+	queryFindbyStatus   = "SELECT id, first_name, last_name, email, status FROM users WHERE status=?;"
+	queryGetUserByEmail = "SELECT id, first_name, last_name, email, password FROM users WHERE email=?"
 )
 
 func (user *User) Save() *errors.RestErr {
@@ -98,4 +99,17 @@ func (user *User) FindbyStatus(status string) ([]User, *errors.RestErr) {
 		return nil, errors.NewInternalServerError(fmt.Sprintf("no user matching status %s", status))
 	}
 	return results, nil
+}
+
+func (user *User) GetByEmail() *errors.RestErr {
+	stmt, err := users_db.Client.Prepare(queryGetUserByEmail)
+	if err != nil {
+		return errors.NewInternalServerError("invalid email")
+	}
+	defer stmt.Close()
+	result := stmt.QueryRow(user.Email)
+	if getErr := result.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.Password); getErr != nil {
+		return errors.NewInternalServerError("database error")
+	}
+	return nil
 }
