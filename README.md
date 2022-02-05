@@ -18,3 +18,17 @@ Create React app with typescript template using:
 - npx create-react-app frontend --template typescript
 - npm run start
 - npm i react-router-dom @types/react-router-dom
+
+For the backend API end-points :
+``` go
+	router.POST("/users", users.Create)
+	router.GET("/users/:user_id", users.Get)
+	router.PUT("/users/:user_id", users.Update)
+	router.PATCH("/users/:user_id", users.Update)
+	router.DELETE("/users/:user_id", users.Delete)
+	router.GET("/internal/users/search", users.Search)
+	router.POST("/api/login", users.Login)
+	router.POST("/api/register", users.Register)
+	router.GET("/api/user", users.GetByCookie)
+	router.GET("/api/logout", users.Logout)
+```
