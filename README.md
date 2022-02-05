@@ -1,10 +1,10 @@
-# Go React REST API
+# Go React REST API (JWT Authorization + React app Authentication + User management)
 
 This is a full Clean Architecture REST API with all REST  four end-points and also three endpoints for setting JWT web token. Authentication of user will encrupt password and generate random Token and based on valid token, a Cookie will be saved for determined duration  
 
 Pre-requisites:
 - Golang
-- MySQL with a schema
+- MySQL or PostgreSQL with a schema (DB independent)
 
 - gin: https://github.com/gin-gonic/gin
 - mysql: https://github.com/go-sql-driver/mysql
